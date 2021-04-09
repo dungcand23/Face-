@@ -1,0 +1,32 @@
+nhập  cv2
+
+faceCascade  =  cv2 . CascadeClassifier ( 'models / haarcascade_frontalface_default.xml' )
+
+def  find_faces ( hình ảnh ):
+    face_coctures  =  _locate_faces ( hình ảnh )
+    cutted_faces  = [ hình ảnh [ y : y  +  h , x : x  +  w ] cho ( x , y , w , h ) trong  mặt_số_độ ]
+    normalized_faces  = [ _normalize_face ( khuôn mặt ) cho  khuôn mặt  trong  cutted_faces ]
+    trả về  zip ( normalized_faces , face_coferences )
+
+def  _normalize_face ( khuôn mặt ):
+    face  =  cv2 . cvtColor ( khuôn mặt , cv2 . COLOR_BGR2GRAY )
+    face  =  cv2 . thay đổi kích thước ( khuôn mặt , ( 350 , 350 ))
+    trở lại  khuôn mặt
+
+def  _locate_faces ( hình ảnh ):
+    face  =  faceCascade . detectorMultiScale (
+        hình ảnh ,
+        scaleFactor = 1.1 ,
+        minNeighbors = 15 ,
+        minSize = ( 70 , 70 )
+    )
+    trả về các  khuôn mặt   # danh sách của (x, y, w, h)
+
+nếu  __name__  ==  "__main__" :
+    hình ảnh  =  cv2 . imread ( 'test_data / test.jpg' )
+    cv2 . imshow ( "khuôn mặt" , hình ảnh )
+
+    cho  chỉ mục , khuôn mặt  trong  liệt kê ( find_faces ( hình ảnh )):
+        cv2 . imshow ( "face% s"  % index , face [ 0 ])
+
+    cv2 . waitKey ( 0 )
